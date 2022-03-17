@@ -1,4 +1,4 @@
-const ErrorPage = () => {
+const ErrorPage = ({ resetDefaultState }) => {
 
   return (
     <div>
@@ -9,7 +9,7 @@ const ErrorPage = () => {
       <main>
         <h1>Sorry!</h1>
         <p>You must be 18 or older to sign up for our site!</p>
-        <button>Back</button>
+        <button onClick={resetDefaultState}>Back</button>
       </main>
     </div>
   )

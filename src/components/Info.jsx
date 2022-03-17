@@ -1,5 +1,5 @@
 const Info = (props) => {
-
+  const isButtonDisabled = !props.name.length || !props.email.length || !props.age.length
   return (
     <div className="info">
       <h1>Information Form</h1>
@@ -34,8 +34,8 @@ const Info = (props) => {
       </form>
       <br></br>
       <div>
-        <button>Back</button>
-        <button onClick={props.incrementPage}>Next</button>
+        <button onClick={props.resetDefaultState}>Back</button>
+        <button disabled={isButtonDisabled} onClick={props.incrementPage}>Next</button>
       </div>
     </div>
   )

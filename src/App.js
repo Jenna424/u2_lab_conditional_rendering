@@ -1,6 +1,9 @@
 import './styles/App.css'
 import { useState } from 'react'
+import LandingPage from './components/LandingPage'
 import Form from './components/Form'
+import Thanks from './components/Thanks'
+import ErrorPage from './components/ErrorPage'
 
 const App = () => {
   const [currentPage, setCurrentPage] = useState(0)
@@ -15,18 +18,38 @@ const App = () => {
     setCurrentPage((prevState) => prevState + 1)
   }
 
-  return (
-    <div className="App">
-      <Form
-        currentPage={currentPage}
-        name={formValues.name}
-        age={formValues.age}
-        email={formValues.email}
-        incrementPage={incrementPage}
-        handleChange={handleChange}
-      />
-    </div>
-  )
+  const resetDefaultState = () => {
+    setCurrentPage(0)
+    setFormValues({ name: '', age: '', email: '' })
+  }
+
+  const getPage = () => {
+    let page
+    if (currentPage === 0) {
+      page = <LandingPage incrementPage={incrementPage} />
+    } else if (currentPage === 1) {
+      page = (
+        <Form
+          name={formValues.name}
+          age={formValues.age}
+          email={formValues.email}
+          handleChange={handleChange}
+          incrementPage={incrementPage}
+          resetDefaultState={resetDefaultState}
+        />
+      )
+    } else if (currentPage === 2) {
+      page =
+        parseInt(formValues.age) > 18 ? (
+          <Thanks resetDefaultState={resetDefaultState} />
+        ) : (
+          <ErrorPage resetDefaultState={resetDefaultState} />
+        )
+    }
+    return page
+  }
+
+  return <div className="App">{getPage()}</div>
 }
 
 export default App
